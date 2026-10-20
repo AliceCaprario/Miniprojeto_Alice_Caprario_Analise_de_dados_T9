@@ -1,4 +1,4 @@
-Mini projeto de análise de dados turma T9 - Senai - SCTEC
+Mini projeto de análise de dados turma T9 - Senai/SC - SCTEC
 
 Aluna:Alice Caprario Medeiros
 Professor: Renisson Souza
