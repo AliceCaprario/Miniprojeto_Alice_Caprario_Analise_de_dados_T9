@@ -1,7 +1,6 @@
 #Importando dados do Kaggle: https://www.kaggle.com/datasets/namespaiva/base-varejo/data
 
 import pandas as pd
-import rich
 
 #Ler o arquivo csv
 
@@ -13,4 +12,5 @@ def importar_dados ():
 
 if __name__ == "__main__":
     df = importar_dados()
+    print (f"{len(df)} registros carregados")
     print(df.head())
