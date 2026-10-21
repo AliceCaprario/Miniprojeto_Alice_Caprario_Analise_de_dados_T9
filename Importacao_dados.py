@@ -7,7 +7,7 @@ import pandas as pd
 CAMINHO_CSV = "Base_varejo.csv"
 
 def importar_dados ():
-    df = pd.read_csv(CAMINHO_CSV)
+    df = pd.read_csv(CAMINHO_CSV, sep=";")
     return df
 
 if __name__ == "__main__":
