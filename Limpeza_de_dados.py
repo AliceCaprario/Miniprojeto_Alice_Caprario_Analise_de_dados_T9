@@ -18,7 +18,32 @@ class LimpezaDeDados:
         self.df = self.df.drop_duplicates().reset_index(drop=True)
         return self
 
+    def validar_id_compra(self):
+        ids_compra = pd.to_numeric(self.df["CO_ID"], errors="coerce")
+        ids_invalidos = ids_compra.isna() | (ids_compra <= 0) | (ids_compra % 1 != 0)
+        if ids_invalidos.any():
+            raise ValueError(
+                f"CO_ID deve conter identificadores numéricos inteiros e positivos. "
+                f"Registros inválidos: {int(ids_invalidos.sum())}."
+            )
+
+        dados_validacao = self.df.assign(CO_ID=ids_compra)
+        consistencia = dados_validacao.groupby("CO_ID").agg(
+            clientes=("CL_ID", "nunique"),
+            datas=("DATA", "nunique"),
+        )
+        ids_inconsistentes = consistencia[
+            (consistencia["clientes"] > 1) | (consistencia["datas"] > 1)
+        ]
+        if not ids_inconsistentes.empty:
+            raise ValueError(
+                "Cada CO_ID deve estar associado a um único cliente e a uma única data. "
+                f"Identificadores inconsistentes: {len(ids_inconsistentes)}."
+            )
+        return self
+
     def executar(self):
+        self.validar_id_compra()
         self.remover_colunas_vazias().remover_nulos().removr_duplicados()
         return self
 

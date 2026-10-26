@@ -7,7 +7,8 @@ from Formatacao import console, numero_br
 def mostrar_resumo(df):
     contagem_por_data = df["DATA"].value_counts()
     dias_com_mais_compras = ", ".join(                         #Feito o join para caso haja mais de um dia com mais compras (empate), todos sejam exibidas
-        contagem_por_data[contagem_por_data == contagem_por_data.max()].index.astype(str)
+        contagem_por_data[contagem_por_data == contagem_por_data.max()]
+        .index.strftime("%d/%m/%Y")
     )
     total_registros = len(df)
     total_compras = df["CO_ID"].nunique()
